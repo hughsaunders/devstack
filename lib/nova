@@ -207,7 +207,7 @@ function configure_nova() {
     if [[ ! -d $NOVA_CONF_DIR ]]; then
         sudo mkdir -p $NOVA_CONF_DIR
     fi
-    sudo chown $STACK_USER $NOVA_CONF_DIR
+    sudo chown -R $STACK_USER $NOVA_CONF_DIR
 
     cp -p $NOVA_DIR/etc/nova/policy.json $NOVA_CONF_DIR
 
@@ -593,6 +593,7 @@ function install_nova() {
         if [ "$NOVNC_FROM_PACKAGE" = "True" ]; then
             NOVNC_WEB_DIR=/usr/share/novnc
             install_package novnc
+            sudo chown -R $STACK_USER $NOVA_CONF_DIR
         else
             NOVNC_WEB_DIR=$DEST/noVNC
             git_clone $NOVNC_REPO $NOVNC_WEB_DIR $NOVNC_BRANCH
